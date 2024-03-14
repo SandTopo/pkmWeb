@@ -125,9 +125,9 @@ function mostarDatosIniciales(listaPk) {
                     <img src="img/loading.gif" alt="">
                 </div>
                 <div>
-                    <p><label>Types: </label><span></span></p>
-                    <p><label>Id: </label><span></span></p>
-                    <p><label>Experience: </label><span></span></p> 
+                    <p><label>Tipos: </label><span></span></p>
+                    <p><label>Nº: </label><span></span></p>
+                    <p><label>Experiencia: </label><span></span></p> 
                 </div>
             </article>`;
         }
@@ -135,16 +135,25 @@ function mostarDatosIniciales(listaPk) {
     document.getElementById("containerpk").innerHTML = contenidoPK;
 }
 
-const f = document.getElementById('form');
-const q = document.getElementById('query');
-const google = 'https://www.google.com/search?q=site%3A+';
-const site = 'pagedart.com';
+function filtro() {
+    // Declare variables
+    var input, filter, section, article, td, i, txtValue;
+    input = document.getElementById("nav");
+    filter = input.value.toUpperCase();
+    section = document.getElementById("containerpk");
+    article = section.getElementsByTagName("${element.name}");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < article.length; i++) {
+      td = article[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          article[i].style.display = "";
+        } else {
+          article[i].style.display = "none";
+        }
+      }
+    }
+  }
 
-function submitted(event) {
-  event.preventDefault();
-  const url = google + site + '+' + q.value;
-  const win = window.open(url, '_blank');
-  win.focus();
-}
-
-f.addEventListener('submit', submitted);
