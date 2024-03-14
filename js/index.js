@@ -92,14 +92,18 @@ function cargarDatosPokemon() {
 }
 
 function extractInfoPokemon(info) {
+    
     pokemon[info.name] = {
-        img: info.sprites.front_default,
+        imgFront: info.sprites.versions["generation-i"]["red-blue"].front_transparent,
+        imgBack: info.sprites.versions["generation-i"]["red-blue"].back_transparent,
         types: info.types.map(t => t.type.name),
         id: info.id,
         experience: info.base_experience
     }
     let selector = "#" + info.name + " img";
-    document.querySelector(selector).src = info.sprites.front_default;
+    let imagenesP=document.querySelectorAll(selector);
+    imagenesP[0].src = pokemon[info.name].imgFront;
+    imagenesP[1].src = pokemon[info.name].imgBack;
     selector = "#" + info.name + " span";
     let textos = document.querySelectorAll(selector);
     textos[0].innerHTML = pokemon[info.name].types;
@@ -116,11 +120,14 @@ function mostarDatosIniciales(listaPk) {
             contenidoPK += `
             <article id="${element.name}">
                 <h3>${element.name}</h3>
-                <img src="img/loading.gif" alt="">
+                <div id="imaged">
+                    <img src="img/loading.gif" alt="">
+                    <img src="img/loading.gif" alt="">
+                </div>
                 <div>
-                    <p><label>Types:</label><span></span></p>
-                    <p><label>Id:</label><span></span></p>
-                    <p><label>Experience</label><span></span></p> 
+                    <p><label>Types: </label><span></span></p>
+                    <p><label>Id: </label><span></span></p>
+                    <p><label>Experience: </label><span></span></p> 
                 </div>
             </article>`;
         }
